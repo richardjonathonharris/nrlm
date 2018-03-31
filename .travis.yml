@@ -15,4 +15,5 @@ matrix:
       script: pytest
 
     - language: node_js
+      install: cd frontend/ && npm install
       script: cd frontend/ && npm test
