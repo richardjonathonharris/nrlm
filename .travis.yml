@@ -22,4 +22,4 @@ matrix:
 
     - language: node_js
       install: cd frontend/ && npm install
-      script: cd frontend/ && npm test
+      script: npm test
