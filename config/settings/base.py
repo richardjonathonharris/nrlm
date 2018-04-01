@@ -76,6 +76,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     # custom users app
     'nrlm.users.apps.UsersConfig',
+    'nrlm.league',
     # Your stuff: custom apps go here
 ]
 
