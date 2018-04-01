@@ -7,10 +7,10 @@ before_install:
   - sudo apt-get install -qq firefox automake libtool libreadline6 libreadline6-dev libreadline-dev
   - sudo apt-get install -qq libsqlite3-dev libxml2 libxml2-dev libssl-dev libbz2-dev wget curl llvm
   - sudo apt-get install -qq nodejs nodejs-legacy
-  - npm install -g npm
-  - npm --version
   - nvm install 8
   - node --version
+  - npm install -g npm
+  - npm --version
   - exit
 matrix:
   include:
