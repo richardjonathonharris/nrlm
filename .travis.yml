@@ -1,3 +1,5 @@
+notifications:
+    email: false
 sudo: true
 before_install:
   - sudo apt-get update -qq
@@ -11,7 +13,6 @@ before_install:
   - node --version
   - npm install -g npm
   - npm --version
-  - exit
 matrix:
   include:
     - language: python
