@@ -6,7 +6,7 @@ before_install:
   - sudo apt-get install -qq graphviz-dev python-setuptools python3-dev python-virtualenv python-pip
   - sudo apt-get install -qq firefox automake libtool libreadline6 libreadline6-dev libreadline-dev
   - sudo apt-get install -qq libsqlite3-dev libxml2 libxml2-dev libssl-dev libbz2-dev wget curl llvm
-  - sudo apt-get install -qq nodejs
+  - sudo apt-get install -qq nodejs nodejs-legacy
 matrix:
   include:
     - language: python
@@ -15,5 +15,5 @@ matrix:
       script: pytest
 
     - language: node_js
-      install: cd frontend/ && sudo npm install
+      install: cd frontend/ && npm install
       script: cd frontend/ && npm test
