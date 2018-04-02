@@ -9,7 +9,6 @@ from django.http import HttpResponse
 from rest_framework.documentation import include_docs_urls
 from rest_framework_jwt import views as jwt_views
 
-
 urlpatterns = [
     
     url(settings.ADMIN_URL, admin.site.urls),
@@ -32,9 +31,11 @@ urlpatterns = [
     
 
     # Your stuff: custom urls includes go here
+   url(r'^', include('nrlm.league.urls')), 
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
