@@ -52,5 +52,7 @@ class Game(models.Model):
 
     def save(self, *args, **kwargs):
         if self.player == self.played_against_player:
-            raise Exception('Attempted to have two players play each other')
+            raise Exception('Attempted to have same two players play each other')
+        elif self.identity == self.played_against_identity:
+            raise Exception('Attempted to have the same identities play each other')
         super(Game, self).save(*args, **kwargs)

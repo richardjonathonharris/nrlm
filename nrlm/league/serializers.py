@@ -82,6 +82,8 @@ class GameSerializer(serializers.Serializer):
         instance.points = validated_data.get('points', instance.points)
         instance.round_num = validated_data.get('round_num', instance.round_num)
         instance.event = validated_data.get('event', instance.event)
+        instance.save()
+        return instance
 
     class Meta:
         model = Game

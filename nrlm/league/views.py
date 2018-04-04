@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions, viewsets
+from rest_framework import generics, permissions, viewsets, mixins
 from rest_framework.decorators import api_view, detail_route
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -42,6 +42,9 @@ class GameViewSet(viewsets.ModelViewSet):
         permissions.IsAuthenticatedOrReadOnly,
         IsOwnerOrReadOnly
         )
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
