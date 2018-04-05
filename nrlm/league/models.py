@@ -24,6 +24,8 @@ class Event(models.Model):
 
 class Identity(models.Model):
     name = models.CharField(max_length=500)
+    owner = models.ForeignKey(AUTH_USER_MODEL, related_name='identities', 
+        on_delete=models.CASCADE, default=None, null=True)
 
     def __str__(self):
         return self.name
