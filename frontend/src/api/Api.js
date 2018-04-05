@@ -46,10 +46,10 @@ var helpers = {
         return axios.all([getAllPlayers(), getAllGames(), getAllIdentities(), getAllEvents()])
             .then(function (arr) {
                 return {
-                    'players': arr[0].data.results,
-                    'games': arr[1].data.results,
-                    'identities': arr[2].data.results,
-                    'events': arr[3].data.results
+                    'players': arr[0].data,
+                    'games': arr[1].data,
+                    'identities': arr[2].data,
+                    'events': arr[3].data
                 }
             })
     },
@@ -64,6 +64,7 @@ var helpers = {
                     'totalPoints': totalPoints(player.id, gamesArray)
                     }))
             })
+        return playerGames;
     }
 };
 
