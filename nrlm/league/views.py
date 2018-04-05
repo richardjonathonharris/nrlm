@@ -34,6 +34,10 @@ class EventViewSet(viewsets.ModelViewSet):
 class IdentityViewSet(viewsets.ModelViewSet):
     queryset = Identity.objects.all()
     serializer_class = IdentitySerializer
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly
+    )
 
 class GameViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()

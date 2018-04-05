@@ -68,7 +68,8 @@ THIRD_PARTY_APPS = [
     'django_filters',
 
     # Integrate webpack with Django: https://github.com/ezhome/django-webpack-loader
-    'webpack_loader'
+    'webpack_loader',
+    'corsheaders',
     
 ]
 
@@ -93,6 +94,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 # MIGRATIONS CONFIGURATION
@@ -349,3 +351,5 @@ OAUTH2_PROVIDER = {
 
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+
+CORS_ORIGIN_ALLOW_ALL = True

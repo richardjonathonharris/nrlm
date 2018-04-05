@@ -44,6 +44,7 @@ class EventSerializer(serializers.Serializer):
 class IdentitySerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(required=True, max_length=500)
+    owner = serializers.ReadOnlyField(source='owner.username')
 
     def create(self, validated_data):
         return Identity.objects.create(**validated_data)
