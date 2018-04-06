@@ -1,29 +1,28 @@
+import AuthService from './AuthService';
+import withAuth from './withAuth';
+import history from './history';
+
 var React = require('react');
-var ReactRouter = require('react-router-dom');
-var Router = ReactRouter.BrowserRouter;
-var Route = ReactRouter.Route;
-var Switch = ReactRouter.Switch;
-var Nav = require('./Nav');
-var Home = require('./Home');
-var League = require('./League');
+
+const Auth = new AuthService();
 
 class App extends React.Component {
   render() {
     return (
-        <Router>
-            <div className='container'>
-                <Nav />
-                <Switch>
-                    <Route exact path='/' component={Home} />
-                    <Route exact path='/league' component={League} />
-                    <Route render={function () {
-                        return <p>NOT FOUND HOMES</p>
-                    }} />
-                </Switch>
+        <div className="App">
+            <div className="App-header">
+                <h2> Welcome {this.props.user.username}</h2>
             </div>
-        </Router>
+            <p className="App-intro">
+                <button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Log Out</button>
+            </p>
+    </div>
     );
   }
+    handleLogout(){
+        Auth.logout()
+        history.replace('/login');
+    }
 }
 
-module.exports = App;
+export default withAuth(App);

@@ -2,20 +2,48 @@ var axios = require('axios');
 
 var dbName = 'http://127.0.0.1:8000'
 
-function getAllPlayers () {
-    return axios.get(dbName + '/players/')
+function getAllPlayers (token) {
+    var header = {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
+    var request = axios.get(dbName + '/players/', 
+        {headers: header}
+    )
+    return request 
 }
 
-function getAllGames () {
-    return axios.get(dbName + '/games/')
+function getAllGames (token) {
+    var header = {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
+    var request = axios.get(dbName + '/games/', 
+        {headers: header}
+    )
+    return request 
 }
 
-function getAllEvents() {
-    return axios.get(dbName + '/events/')
+function getAllEvents(token) {
+    var header = {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
+    var request = axios.get(dbName + '/events/', 
+        {headers: header}
+    )
+    return request 
 }
 
-function getAllIdentities() {
-    return axios.get(dbName + '/identities/')
+function getAllIdentities(token) {
+    var header = {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }
+    var request = axios.get(dbName + '/identities/', 
+        {headers: header}
+    )
+    return request 
 }
 
 function totalGames (playerId, gamesArray) {
@@ -73,8 +101,8 @@ function calcHistory(games, players, identities, events) {
 }
 
 var helpers = {
-    getAllPlayersData: function () {
-        return axios.all([getAllPlayers(), getAllGames(), getAllIdentities(), getAllEvents()])
+    getAllPlayersData: function (token) {
+        return axios.all([getAllPlayers(token), getAllGames(token), getAllIdentities(token), getAllEvents(token)])
             .then(function (arr) {
                 return {
                     'players': arr[0].data,

@@ -334,6 +334,7 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
     'JWT_ALLOW_REFRESH': True,
     'JWT_AUTH_COOKIE': 'jwt',
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
 
 # OAUTH2 CONFIGURATION

@@ -1,6 +1,11 @@
+import AuthService from './AuthService';
+import withAuth from './withAuth';
+import Player from './Player';
+
+const Auth = new AuthService();
+
 var React = require('react');
 var Link = require('react-router-dom').Link;
-var Player = require('./Player');
 
 class League extends React.Component {
     render () {
@@ -13,4 +18,4 @@ class League extends React.Component {
     }
 }
 
-module.exports = League;
+export default withAuth(League);

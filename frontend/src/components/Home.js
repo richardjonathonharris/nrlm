@@ -1,3 +1,6 @@
+import AuthService from './AuthService';
+import withAuth from './withAuth';
+
 var React = require('react');
 var Link = require('react-router-dom').Link;
 
@@ -11,4 +14,4 @@ class Home extends React.Component {
     }
 }
 
-module.exports = Home;
+export default withAuth(Home);

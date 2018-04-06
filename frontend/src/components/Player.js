@@ -1,3 +1,8 @@
+import AuthService from './AuthService';
+import withAuth from './withAuth';
+
+const Auth = new AuthService();
+
 var React = require('react');
 var axios = require('axios');
 var helpers = require('../api/Api').helpers;
@@ -25,9 +30,7 @@ function DisplayHistory (props) {
     var games = props.data.data.games.results;
     var events = props.data.data.events.results;
     var identities = props.data.data.identities.results;
-    console.log(games)
     var history = helpers.calcHistory(games, players, identities, events);
-    console.log(history)
     return ( 'Hi' )
 }
 
@@ -45,7 +48,7 @@ class Player extends React.Component {
         };
     }
     componentDidMount() {
-        helpers.getAllPlayersData()
+        helpers.getAllPlayersData(localStorage.id_token)
             .then(function (info) {
                 this.setState({
                     data: info
@@ -64,4 +67,4 @@ class Player extends React.Component {
     }
 };
 
-module.exports = Player;
+export default withAuth(Player);
