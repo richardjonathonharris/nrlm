@@ -41,6 +41,37 @@ function totalPoints (playerId, gamesArray) {
     );
 };
 
+function createLookup(arrayobs) {
+    return arrayobs.reduce((obj, item) => {
+        obj[item.id] = item
+        return obj
+    }, {})
+}
+
+function calcHistory(games, players, identities, events) {
+    var playerLookup = createLookup(players);
+    var identitiesLookup = createLookup(identities);
+    var eventsLookup = createLookup(events);
+
+    var history = [];
+
+    function getPoints (points) {
+        return String(points) + ' - ' + String(6 - points)
+        }
+    games.map(function (game) {
+        return (
+            history.push(
+                {'id': game.id,
+                'player1': playerLookup[game.player].name,
+                'player2': playerLookup[game.played_against_player].name,
+                'points': getPoints(game.points)
+                }
+            )
+        )
+    })
+    return history
+}
+
 var helpers = {
     getAllPlayersData: function () {
         return axios.all([getAllPlayers(), getAllGames(), getAllIdentities(), getAllEvents()])
@@ -65,7 +96,8 @@ var helpers = {
                     }))
             })
         return playerGames;
-    }
+    },
+    calcHistory: calcHistory
 };
 
 module.exports = {

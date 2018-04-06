@@ -20,6 +20,23 @@ function DisplayLeaderboard (props) {
         );
 }
 
+function DisplayHistory (props) {
+    var players = props.data.data.players.results;
+    var games = props.data.data.games.results;
+    var events = props.data.data.events.results;
+    var identities = props.data.data.identities.results;
+    console.log(games)
+    var history = helpers.calcHistory(games, players, identities, events);
+    console.log(history)
+    return ( 'Hi' )
+}
+
+function DisplayAll (props) {
+    return (
+        <DisplayHistory data={props}/>
+    );
+}
+
 class Player extends React.Component {
     constructor(props) {
         super(props)
@@ -41,7 +58,7 @@ class Player extends React.Component {
             <div>
                 {!this.state.data
                     ? <h1>ONE SEC YOU CRAZY CRAZY PERSON!</h1>
-                    : <DisplayLeaderboard data={this.state.data} />}
+                    : <DisplayAll data={this.state.data}/>}
             </div>
         );
     }
