@@ -7,13 +7,32 @@ var NavLink = require('react-router-dom').NavLink;
 
 const Auth = new AuthService();
 
-class Nav extends React.Component {
-    checkLogin () {
-        return Auth.loggedIn()
+function LoginSection (props) {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) { 
+        return (
+            <li>
+            <NavLink activeClassName='active' to='/profile'>
+                {Auth.getProfile().username }
+            </NavLink>
+            </li>
+        )
     }
-    handleLogout () {
+    else {
+        return (
+            <li>
+                <NavLink activeClassName='active' to='/login'>
+                    Login
+                </NavLink>
+            </li>
+        )
+    }
+}
+
+class Nav extends React.Component {
+    logOut () {
         Auth.logout()
-        history.replace('/login')
+        return history.replace('/')
     }
     render() {
         return (
@@ -29,18 +48,11 @@ class Nav extends React.Component {
                             League
                         </NavLink>
                     </li>
-                   {!this.checkLogin()
-                        ? <NavLink activeClassName='active' to='/login'>
-                            Log In
-                        </NavLink>
-                        : <li> {this.props.user.username}  
-                              <button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Log Out</button>
-                           </li>
-                   }
+                    <LoginSection isLoggedIn={Auth.loggedIn()} />
                 </ul>
             </div>
         )
     }
 }
 
-export default withAuth(Nav);
+export default Nav;

@@ -5,8 +5,8 @@ import withAuth from './withAuth';
 var React = require('react');
 
 class Login extends React.Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props)
         this.handleChange = this.handleChange.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.Auth = new AuthService();
