@@ -9,9 +9,12 @@ class Home extends React.Component {
         return (
             <div className='text-container'>
                 <h1>Here is information about the home component!</h1>
+                <p>
+                    This is information about our app. Our app is great! We love our app!
+                </p>
             </div>
         );
     }
 }
 
-export default withAuth(Home);
+export default Home;

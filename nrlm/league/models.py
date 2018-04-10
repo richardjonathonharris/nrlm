@@ -37,7 +37,6 @@ class Game(models.Model):
     identity = models.ForeignKey(Identity, 
         on_delete=models.CASCADE,
         related_name='main_player_identity')
-    is_corp = models.BooleanField()
     played_against_player = models.ForeignKey(Player, 
         on_delete=models.CASCADE,
         related_name='opponent_player')
@@ -45,6 +44,7 @@ class Game(models.Model):
         on_delete=models.CASCADE,
         related_name='opponent_player_id')
     points = models.IntegerField(default=0)
+    played_against_points = models.IntegerField(default=0)
     round_num = models.IntegerField(null=True, default=None)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)

@@ -45,3 +45,28 @@ a {
     flex-direction: column;
     align-items: center;
 }
+
+.player-container {
+    text-weight: bold;
+    font-size: 1.6em;
+}
+
+.id-container {
+    font-size: 0.6em;
+    font-style: italic;
+}
+
+.point-container {
+    padding: 1em;
+    padding-right: 2.5em;
+    text-weight: bold;
+}
+
+.match-container {
+    font-size: 0.8em;
+}
+
+td {
+    align: center;
+    valign: center;
+}

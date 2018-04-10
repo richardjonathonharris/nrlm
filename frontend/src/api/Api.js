@@ -60,8 +60,11 @@ function totalGames (playerId, gamesArray) {
 function totalPoints (playerId, gamesArray) {
     return (
         gamesArray.reduce(function (acc, obj) {
-            if (obj.player === playerId || obj.played_against_player === playerId) {
+            if (obj.player === playerId) {
                 return acc + obj.points
+            }
+            else if (obj.played_against_player === playerId) {
+                return acc + obj.played_against_points
             } else {
                 return acc
             }
@@ -80,19 +83,20 @@ function calcHistory(games, players, identities, events) {
     var playerLookup = createLookup(players);
     var identitiesLookup = createLookup(identities);
     var eventsLookup = createLookup(events);
-
     var history = [];
 
-    function getPoints (points) {
-        return String(points) + ' - ' + String(6 - points)
-        }
     games.map(function (game) {
         return (
             history.push(
                 {'id': game.id,
                 'player1': playerLookup[game.player].name,
                 'player2': playerLookup[game.played_against_player].name,
-                'points': getPoints(game.points)
+                    'points1': game.points, 
+                    'points2': game.played_against_points,
+                    'identity1': identitiesLookup[game.identity].name,
+                    'identity2': identitiesLookup[game.played_against_identity].name,
+                    'event': eventsLookup[game.event].name,
+                    'round': game.round_num
                 }
             )
         )
