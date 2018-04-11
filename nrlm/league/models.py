@@ -24,6 +24,8 @@ class Event(models.Model):
 
 class Identity(models.Model):
     name = models.CharField(max_length=500)
+    faction = models.CharField(max_length=500, null=True)
+    is_corp = models.NullBooleanField()
     owner = models.ForeignKey(AUTH_USER_MODEL, related_name='identities', 
         on_delete=models.CASCADE, default=None, null=True)
 
@@ -31,20 +33,20 @@ class Identity(models.Model):
         return self.name
 
 class Game(models.Model):
-    player = models.ForeignKey(Player, 
+    runner = models.ForeignKey(Player, 
         on_delete=models.CASCADE, 
         related_name='main_player')
-    identity = models.ForeignKey(Identity, 
+    r_identity = models.ForeignKey(Identity, 
         on_delete=models.CASCADE,
         related_name='main_player_identity')
-    played_against_player = models.ForeignKey(Player, 
+    corp= models.ForeignKey(Player, 
         on_delete=models.CASCADE,
         related_name='opponent_player')
-    played_against_identity = models.ForeignKey(Identity, 
+    c_identity = models.ForeignKey(Identity, 
         on_delete=models.CASCADE,
         related_name='opponent_player_id')
-    points = models.IntegerField(default=0)
-    played_against_points = models.IntegerField(default=0)
+    r_points = models.IntegerField(default=0)
+    c_points = models.IntegerField(default=0)
     round_num = models.IntegerField(null=True, default=None)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
@@ -53,8 +55,8 @@ class Game(models.Model):
         on_delete=models.CASCADE, default=None, null=True)
 
     def save(self, *args, **kwargs):
-        if self.player == self.played_against_player:
+        if self.runner == self.corp:
             raise Exception('Attempted to have same two players play each other')
-        elif self.identity == self.played_against_identity:
+        elif self.r_identity == self.c_identity:
             raise Exception('Attempted to have the same identities play each other')
         super(Game, self).save(*args, **kwargs)

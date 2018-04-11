@@ -46,27 +46,47 @@ a {
     align-items: center;
 }
 
-.player-container {
-    text-weight: bold;
-    font-size: 1.6em;
+.faction {
+    font-size:0.6em;
+    font-style:italic;
 }
 
-.id-container {
-    font-size: 0.6em;
-    font-style: italic;
+.anarch {
+    color: orangered;
 }
 
-.point-container {
-    padding: 1em;
-    padding-right: 2.5em;
-    text-weight: bold;
+.shaper {
+    color: limegreen;
 }
 
-.match-container {
-    font-size: 0.8em;
+.criminal {
+    color: royalblue;
 }
 
-td {
-    align: center;
-    valign: center;
+.adam {
+    color: olive;
+}
+
+.sunny-lebeau {
+    color: #886E8F;
+}
+
+.apex {
+    color: #C25048;
+}
+
+.haas-bioroid {
+    color: blueviolet;
+}
+
+.jinteki {
+    color: crimson;
+}
+
+.nbn {
+    color: darkorange;
+}
+
+.weyland-consortium {
+    color: darkgreen;
 }

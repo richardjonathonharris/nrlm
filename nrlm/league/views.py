@@ -40,7 +40,6 @@ class IdentityViewSet(viewsets.ModelViewSet):
     serializer_class = IdentitySerializer
     permission_classes = (
         permissions.IsAuthenticated,
-        IsOwnerOrReadOnly
     )
     authentication_class = (JSONWebTokenAuthentication,
     )

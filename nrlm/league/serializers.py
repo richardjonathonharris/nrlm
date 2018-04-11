@@ -44,6 +44,8 @@ class EventSerializer(serializers.Serializer):
 class IdentitySerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(required=True, max_length=500)
+    faction = serializers.CharField(required=True, max_length=500)
+    is_corp = serializers.NullBooleanField()
     owner = serializers.ReadOnlyField(source='owner.username')
 
     def create(self, validated_data):
@@ -51,21 +53,23 @@ class IdentitySerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
+        instance.faction = validated_data.get('faction', instance.faction)
+        instance.is_corp = validated_data.get('is_corp', instance.is_corp)
         instance.save()
         return instance
 
     class Meta:
         model = Identity
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'faction', 'is_corp')
 
 class GameSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    player = serializers.PrimaryKeyRelatedField(queryset=Player.objects.all()) # can change this to id or slug if we want different values
-    identity = serializers.PrimaryKeyRelatedField(queryset=Identity.objects.all())
-    played_against_player = serializers.PrimaryKeyRelatedField(queryset=Player.objects.all())
-    played_against_identity = serializers.PrimaryKeyRelatedField(queryset=Identity.objects.all())
-    points = serializers.IntegerField()
-    played_against_points = serializers.IntegerField()
+    runner = serializers.PrimaryKeyRelatedField(queryset=Player.objects.all()) # can change this to id or slug if we want different values
+    r_identity = serializers.PrimaryKeyRelatedField(queryset=Identity.objects.all())
+    corp = serializers.PrimaryKeyRelatedField(queryset=Player.objects.all())
+    c_identity = serializers.PrimaryKeyRelatedField(queryset=Identity.objects.all())
+    r_points = serializers.IntegerField()
+    c_points = serializers.IntegerField()
     round_num = serializers.IntegerField()
     event = serializers.PrimaryKeyRelatedField(queryset=Event.objects.all())
     created_at = serializers.DateTimeField(required=False)
@@ -75,12 +79,12 @@ class GameSerializer(serializers.Serializer):
         return Game.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.player = validated_data.get('player', instance.player)
-        instance.identity = validated_data.get('identity', instance.identity)
-        instance.played_against_player = validated_data.get('played_against_player', instance.played_against_player)
-        instance.played_against_identity = validated_data.get('played_against_identity', instance.played_against_identity)
-        instance.points = validated_data.get('points', instance.points)
-        instance.played_against_points = validated_data.get('played_against_points', instance.played_against_points)
+        instance.runner = validated_data.get('runner', instance.runner)
+        instance.r_identity = validated_data.get('r_identity', instance.r_identity)
+        instance.corp = validated_data.get('corp', instance.corp)
+        instance.c_identity= validated_data.get('c_identity', instance.c_identity)
+        instance.r_points = validated_data.get('r_points', instance.r_points)
+        instance.c_points = validated_data.get('c_points', instance.c_points)
         instance.round_num = validated_data.get('round_num', instance.round_num)
         instance.event = validated_data.get('event', instance.event)
         instance.save()
@@ -88,9 +92,10 @@ class GameSerializer(serializers.Serializer):
 
     class Meta:
         model = Game
-        fields = ('id', 'player', 'identity', 
-            'played_against_player', 'played_against_identity',
-            'points', 'played_against_points', 'round_num', 'event'
+        fields = ('id', 'runner', 'r_identity', 
+            'corp', 'c_identity',
+            'r_points', 'c_points',
+            'round_num', 'event'
         )
 
 class UserSerializer(serializers.ModelSerializer):

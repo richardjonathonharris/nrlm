@@ -49,7 +49,7 @@ function getAllIdentities(token) {
 function totalGames (playerId, gamesArray) {
     return (
         gamesArray.reduce(function (acc, obj) {
-            if (obj.player === playerId || obj.played_against_player === playerId) {
+            if (obj.runner === playerId || obj.corp === playerId) {
                 return acc + 1
             } else
                 return acc
@@ -60,11 +60,11 @@ function totalGames (playerId, gamesArray) {
 function totalPoints (playerId, gamesArray) {
     return (
         gamesArray.reduce(function (acc, obj) {
-            if (obj.player === playerId) {
-                return acc + obj.points
+            if (obj.runner === playerId) {
+                return acc + obj.r_points
             }
-            else if (obj.played_against_player === playerId) {
-                return acc + obj.played_against_points
+            else if (obj.corp === playerId) {
+                return acc + obj.c_points
             } else {
                 return acc
             }
@@ -89,12 +89,14 @@ function calcHistory(games, players, identities, events) {
         return (
             history.push(
                 {'id': game.id,
-                'player1': playerLookup[game.player].name,
-                'player2': playerLookup[game.played_against_player].name,
-                    'points1': game.points, 
-                    'points2': game.played_against_points,
-                    'identity1': identitiesLookup[game.identity].name,
-                    'identity2': identitiesLookup[game.played_against_identity].name,
+                'runner': playerLookup[game.runner].name,
+                'corp': playerLookup[game.corp].name,
+                    'r_points': game.r_points, 
+                    'c_points': game.c_points,
+                    'r_identity': identitiesLookup[game.r_identity].name,
+                    'c_identity': identitiesLookup[game.c_identity].name,
+                    'r_faction': identitiesLookup[game.r_identity].faction,
+                    'c_faction': identitiesLookup[game.c_identity].faction,
                     'event': eventsLookup[game.event].name,
                     'round': game.round_num
                 }
@@ -104,7 +106,14 @@ function calcHistory(games, players, identities, events) {
     return history
 }
 
+function getIds () {
+    var endpoint = 'https://netrunnerdb.com/api/2.0/public/cards'
+    var request = axios.get(endpoint)
+    return request
+}
+
 var helpers = {
+    getIds: getIds,
     getAllPlayersData: function (token) {
         return axios.all([getAllPlayers(token), getAllGames(token), getAllIdentities(token), getAllEvents(token)])
             .then(function (arr) {
